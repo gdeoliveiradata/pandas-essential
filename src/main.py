@@ -1,11 +1,19 @@
+import os
 import requests
 import zipfile
+import numpy as np
+import pandas as pd
 
 def download_dataset(api_url, zip_path, raw_folder):
+    # Check if the file already exists
+    if os.path.exists(zip_path):
+        print(f"CSV already downloaded and saved to {raw_folder}.")
+        return
+
     # Get the binary streamed data from the API
     with requests.get(api_url, stream=True) as r:
         
-        # Raise an error if it occurs
+        # Raise an exception for bad status codes
         r.raise_for_status()
 
         # Write the binary data in chunks to a .zip file
