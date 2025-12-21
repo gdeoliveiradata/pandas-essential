@@ -10,7 +10,7 @@ def download_dataset(api_url, zip_path, raw_folder):
         print(f"CSV already downloaded and saved to {raw_folder}.")
         return
 
-    # Get the binary streamed data from the API
+    # Get the dataset from the API
     with requests.get(api_url, stream=True) as r:
         
         # Raise an exception for bad status codes
@@ -33,3 +33,7 @@ zip_path = "./data/landing/global-superstore-dataset.zip"
 raw_folder = "./data/raw/"
 
 download_dataset(api_url, zip_path, raw_folder)
+
+df = pd.read_csv("./data/raw/superstore.csv")
+
+print(df.describe())
